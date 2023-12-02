@@ -11,6 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var countTextView: TextView
     private lateinit var button: Button
     private val counts = Count.Base(step = 2)
+    private lateinit var result: String
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +22,17 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.incrementButton)
 
         button.setOnClickListener {
-            val result = counts.increment(countTextView.text.toString())
+            result = counts.increment(countTextView.text.toString())
             countTextView.text = result
         }
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("key", result)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        result = savedInstanceState.getString("key").toString()
     }
 }
