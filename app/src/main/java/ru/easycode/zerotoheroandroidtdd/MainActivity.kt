@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -22,29 +23,23 @@ class MainActivity : AppCompatActivity() {
         countText = findViewById(R.id.countTextView)
 
         decrementButton.setOnClickListener{
-            uiState = count.increment(countText.text.toString())
-            uiState.apply(decrementButton, incrementButton, countText)
-        }
-        incrementButton.setOnClickListener{
             uiState = count.decrement(countText.text.toString())
             uiState.apply(decrementButton, incrementButton, countText)
         }
+        incrementButton.setOnClickListener{
+            uiState = count.increment(countText.text.toString())
+            uiState.apply(decrementButton, incrementButton, countText)
+        }
 
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             uiState = count.initial(countText.text.toString())
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable(KEY, uiState)
+            uiState.apply(decrementButton, incrementButton, countText)
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        uiState =
-    }
-
-    companion object{
-        private const val KEY = "uiStateKey"
+        uiState = count.initial(countText.text.toString())
+        uiState.apply(decrementButton, incrementButton, countText)
     }
 }

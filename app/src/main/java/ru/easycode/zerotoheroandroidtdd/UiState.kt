@@ -4,7 +4,7 @@ import android.widget.Button
 import android.widget.TextView
 import java.io.Serializable
 
-interface UiState : Serializable {
+interface UiState {
 
     fun apply(
         dicrementButton: Button,
@@ -14,23 +14,27 @@ interface UiState : Serializable {
 
     data class Base(private val text: String) : UiState {
         override fun apply(dicrementButton: Button, incrementButton: Button, countText: TextView) {
-            countText.setText(text)
+            countText.text = text
+            dicrementButton.isEnabled = true
+            incrementButton.isEnabled = true
         }
 
     }
 
     data class Max(private val text: String) : UiState {
         override fun apply(dicrementButton: Button, incrementButton: Button, countText: TextView) {
-            countText.setText(text)
-            dicrementButton.isEnabled = false
+            countText.text = text
+            dicrementButton.isEnabled = true
+            incrementButton.isEnabled = false
         }
 
     }
 
     data class Min(private val text: String) : UiState {
         override fun apply(dicrementButton: Button, incrementButton: Button, countText: TextView) {
-            countText.setText(text)
-            incrementButton.isEnabled = false
+            countText.text = text
+            incrementButton.isEnabled = true
+            dicrementButton.isEnabled = false
         }
     }
 }

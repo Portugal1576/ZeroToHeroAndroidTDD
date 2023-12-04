@@ -1,6 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd
 
-interface Count: UiState {
+interface Count {
 
     fun initial(number: String): UiState
 
